@@ -104,51 +104,36 @@
 
 // export default Page;
 
-import fs from 'fs';
-import path from 'path';
-import matter from 'gray-matter';
-import rehypeDocument from 'rehype-document';
-import rehypeFormat from 'rehype-format';
-import rehypeStringify from 'rehype-stringify';
-import remarkParse from 'remark-parse';
-import remarkRehype from 'remark-rehype';
-import { unified } from 'unified';
-import rehypePrettyCode from 'rehype-pretty-code';
-import { transformerCopyButton } from '@rehype-pretty/transformers';
-import rehypeAutolinkHeadings from 'rehype-autolink-headings';
-import rehypeSlug from 'rehype-slug';
-import OnThisPage from '../../../components/onThisPage';
+import fs from "fs";
+import path from "path";
+import matter from "gray-matter";
+import rehypeDocument from "rehype-document";
+import rehypeFormat from "rehype-format";
+import rehypeStringify from "rehype-stringify";
+import remarkParse from "remark-parse";
+import remarkRehype from "remark-rehype";
+import { unified } from "unified";
+import rehypePrettyCode from "rehype-pretty-code";
+import { transformerCopyButton } from "@rehype-pretty/transformers";
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
+import rehypeSlug from 'rehype-slug'
+import OnThisPage from "../../../components/onThisPage";
 
-// Generate the paths for static generation
-export async function generateStaticParams() {
-  const contentPath = path.join(process.cwd(), 'content');
-  const files = fs.readdirSync(contentPath);
-
-  const paths = files.map((file) => ({
-    slug: file.replace('.md', ''),
-  }));
-
-  return paths.map((slug) => ({
-    slug: slug.slug,
-  }));
-}
-
-// Get the data for a particular blog post
-export async function generateMetadata({ params }) {
-  const { slug } = params;
-  const filepath = path.join(process.cwd(), 'content', `${slug}.md`);
+const Page = async ({ params }) => {
+  const slug = params.slug;
+  const filepath = path.join(process.cwd(), `content/${slug}.md`);
 
   if (!fs.existsSync(filepath)) {
-    return { notFound: true };
+    return <div>Blog post not found</div>;
   }
 
-  const fileContent = fs.readFileSync(filepath, 'utf-8');
+  const fileContent = fs.readFileSync(filepath, "utf-8");
   const { content, data } = matter(fileContent);
 
   const file = await unified()
     .use(remarkParse)
     .use(remarkRehype)
-    .use(rehypeDocument, { title: '👋🌍' })
+    .use(rehypeDocument, { title: "👋🌍" })
     .use(rehypeFormat)
     .use(rehypeStringify)
     .use(rehypeAutolinkHeadings)
@@ -156,8 +141,8 @@ export async function generateMetadata({ params }) {
     .use(rehypePrettyCode, {
       transformers: [
         transformerCopyButton({
-          visibility: 'always',
-          feedbackDuration: 3000,
+          visibility: "always",
+          feedbackDuration: 3_000,
         }),
       ],
     });
@@ -165,21 +150,9 @@ export async function generateMetadata({ params }) {
   const res = await file.process(content);
   const htmlContent = res.toString();
 
-  return {
-    props: {
-      post: { htmlContent, data },
-    },
-  };
-}
-
-const Page = ({ post }) => {
-  const { htmlContent, data } = post;
-
   return (
     <div className="max-w-screen-xl mx-auto flex flex-col-reverse sm:mt-16 md:flex-row lg:gap-8 2xl:gap-28">
-      {/* Main Content Section */}
       <div className="flex-1 p-6">
-        {/* Blog Title Section */}
         <div className="bg-white shadow-md mt-8 sm:mt-0 rounded-lg p-6 w-full max-w-3xl mx-auto mb-6">
           <p className="text-xl italic text-gray-700 text-center">
             "{data.title}"
@@ -187,7 +160,6 @@ const Page = ({ post }) => {
           <p className="text-right text-gray-500 mt-2">— {data.author}</p>
         </div>
 
-        {/* Blog Content Section */}
         <div className="shadow-md rounded-lg p-6 w-full max-w-3xl mx-auto">
           <div
             dangerouslySetInnerHTML={{ __html: htmlContent }}
@@ -196,7 +168,6 @@ const Page = ({ post }) => {
         </div>
       </div>
 
-      {/* Sidebar Section */}
       <div className="w-full max-w-xs md:max-w-sm lg:max-w-md">
         <OnThisPage htmlcontent={htmlContent} />
       </div>
