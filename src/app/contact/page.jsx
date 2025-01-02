@@ -25,6 +25,7 @@ function Contact() {
   
       if (response.ok) {
         setSuccessMessage('Your message has been sent successfully!');
+        setIsSubmitting(false);
         setErrorMessage('');
         setName('');
         setEmail('');

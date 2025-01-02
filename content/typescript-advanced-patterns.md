@@ -16,6 +16,8 @@ A deep dive into advanced TypeScript patterns and techniques for building robust
 
 ### 1. Type Constraints
 
+Using type constraints ensures that generic functions and classes can work only with specific types or structures. For instance, the measureLength function demonstrates how to enforce that a type has a length property. This makes the code both flexible and safe, preventing runtime errors while working with unknown types.
+
 ```typescript showLineNumbers
 // Constraining generic types
 interface HasLength {
@@ -34,6 +36,8 @@ measureLength({ length: 5 }); // Works with objects having length
 ```
 
 ### 2. Generic Constraints in Classes
+
+Generic constraints in classes help enforce a structure for type parameters. In the GenericRepository class, the T extends Entity constraint ensures all repository items have an id and createdAt field, making it suitable for database-like operations while remaining type-safe.
 
 ```typescript showLineNumbers
 interface Repository<T> {
@@ -72,6 +76,8 @@ const userRepo = new GenericRepository<User>('users');
 ## Utility Types
 
 ### 1. Advanced Type Transformations
+
+Utility types like DeepPartial and DeepRequired allow you to modify the structure of existing types deeply, making them either optional or mandatory. This is useful for working with configurations or scenarios where partial updates are common.
 
 ```typescript showLineNumbers
 // Deep Partial type
@@ -113,6 +119,8 @@ const partialConfig: DeepPartial<Config> = {
 
 ### 2. Conditional Types
 
+Conditional types introduce logic into your type definitions. They allow transformations based on conditions, as seen in IsArray and NonNullable. These types enhance flexibility when defining APIs and working with inferred types.
+
 ```typescript showLineNumbers
 // Type based on condition
 type IsArray<T> = T extends any[] ? true : false;
@@ -138,6 +146,8 @@ type User = ReturnType<typeof createUser>; // { name: string; age: number; id: n
 ## Advanced Patterns
 
 ### 1. Builder Pattern
+
+The Builder Pattern creates objects step-by-step using a fluent API, ensuring that your object is fully formed before use. The RequestBuilder example shows how you can chain methods to construct HTTP requests in a type-safe and readable manner.
 
 ```typescript showLineNumbers
 class RequestBuilder {
@@ -189,6 +199,8 @@ const request = new RequestBuilder()
 ```
 
 ### 2. Factory Pattern with Type Guards
+
+Factories streamline object creation, while type guards ensure type safety when distinguishing between related classes. In the AnimalFactory example, type guards like isDog and isCat allow you to utilize specific methods confidently.
 
 ```typescript showLineNumbers
 interface Animal {
@@ -250,6 +262,8 @@ if (isDog(animal)) {
 
 ### 1. Method Decorators
 
+Decorators are powerful tools for enhancing functionality. The timing decorator adds performance tracking to methods, demonstrating how decorators can augment class behaviors dynamically and in a reusable way.
+
 ```typescript showLineNumbers
 // Timing decorator
 function timing() {
@@ -284,6 +298,8 @@ class UserService {
 ```
 
 ### 2. Property Decorators
+
+The required property decorator enforces validation at the property level. This is helpful for ensuring that critical fields are never left undefined or null, making your application more robust.
 
 ```typescript showLineNumbers
 // Validation decorator
@@ -324,6 +340,8 @@ class User {
 
 ### 1. Mapped Types
 
+Mapped types transform existing types into new forms, such as making them readonly, nullable, or converting methods to asynchronous. This simplifies working with deeply nested objects and ensures type safety when modifying data structures.
+
 ```typescript showLineNumbers
 // Make all properties optional and nullable
 type Nullable<T> = {
@@ -356,6 +374,8 @@ type AsyncUser = AsyncMethods<User>;
 
 ### 2. Template Literal Types
 
+Combining string literals and template types enables flexible and precise definitions. In the ApiRoute example, you can validate and enforce correct API method and endpoint combinations, reducing the likelihood of incorrect routes.
+
 ```typescript showLineNumbers
 // HTTP methods
 type HttpMethod = 'GET' | 'POST' | 'PUT' | 'DELETE';
@@ -380,6 +400,8 @@ validateRoute('POST /posts');    // Valid
 ## Error Handling
 
 ### 1. Result Type Pattern
+
+This pattern introduces a unified way to handle success and failure scenarios, avoiding exceptions and providing a clear structure. The ResultHandler class simplifies this process, ensuring developers can handle results consistently and safely.
 
 ```typescript showLineNumbers
 interface Success<T> {
@@ -424,6 +446,8 @@ if (result.success) {
 ```
 
 ### 2. Custom Error Types
+
+Custom error classes allow you to define specific error types for different scenarios. For example, ValidationError and NotFoundError improve debugging and error handling by providing contextual information.
 
 ```typescript showLineNumbers
 class ApplicationError extends Error {

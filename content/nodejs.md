@@ -16,6 +16,10 @@ A comprehensive guide to building scalable and maintainable Node.js applications
 
 ### 1. Directory Organization
 
+This structure organizes code into logical folders, separating concerns like routes, models, services, and middleware.
+The src/ folder contains the core application logic, while tests/ is for unit and integration tests.
+server.js serves as the entry point, initializing the server and application setup.
+
 ```plaintext
 project-root/
 ├── src/
@@ -31,6 +35,10 @@ project-root/
 ```
 
 ### 2. Module Organization
+
+UserService encapsulates business logic for user-related operations.
+Dependencies like userRepository and emailService are injected, promoting testability and decoupling.
+The createUser method demonstrates a typical service operation involving database interaction and email notification.
 
 ```javascript showLineNumbers
 // services/user.service.js
@@ -51,6 +59,10 @@ module.exports = UserService;
 ```
 
 ## Error Handling
+
+AppError is a custom error class for handling application-specific errors.
+Subclassing allows creating specific error types, like ValidationError.
+These errors carry a statusCode and status for consistent error responses.
 
 ### 1. Custom Error Classes
 
@@ -77,6 +89,10 @@ module.exports = { AppError, ValidationError };
 ```
 
 ### 2. Global Error Handler
+
+Centralizes error handling for the application.
+Differentiates between development and production environments for detailed vs. user-friendly error messages.
+Handles operational and unexpected errors consistently.
 
 ```javascript showLineNumbers
 // middleware/errorHandler.js
@@ -114,6 +130,9 @@ module.exports = errorHandler;
 
 ### 1. Async/Await Best Practices
 
+catchAsync wraps asynchronous functions to handle errors automatically.
+getUser demonstrates usage, ensuring errors propagate to the error handler without redundant try-catch blocks.
+
 ```javascript showLineNumbers
 // controllers/user.controller.js
 const catchAsync = fn => (req, res, next) => {
@@ -133,6 +152,9 @@ class UserController {
 ```
 
 ### 2. Promise Handling
+
+Demonstrates using Promise.allSettled for bulk operations.
+Errors for individual emails are caught without affecting others, and results are processed separately.
 
 ```javascript showLineNumbers
 // services/email.service.js
@@ -162,6 +184,10 @@ class EmailService {
 ## Security
 
 ### 1. Request Validation
+
+Uses express-validator to validate incoming requests.
+Example: Validates email and password fields during user creation.
+A validate middleware is created to handle validations and send appropriate error responses.
 
 ```javascript showLineNumbers
 // middleware/validate.js
@@ -194,6 +220,10 @@ router.post('/users', validate(createUserValidation), userController.create);
 
 ### 2. Security Headers
 
+Implements helmet for setting secure HTTP headers.
+Uses rate-limit to prevent abuse by limiting the number of requests from a single IP.
+Configures CORS for secure cross-origin requests.
+
 ```javascript showLineNumbers
 // middleware/security.js
 const helmet = require('helmet');
@@ -223,6 +253,9 @@ const securityMiddleware = app => {
 
 ### 1. Caching
 
+Uses NodeCache to cache API responses temporarily.
+Middleware checks if a response is cached for the current request URL, serving it from the cache if available.
+
 ```javascript showLineNumbers
 // middleware/cache.js
 const NodeCache = require('node-cache');
@@ -248,6 +281,9 @@ const cacheMiddleware = (duration) => {
 ```
 
 ### 2. Worker Threads
+
+Demonstrates the use of worker_threads for handling CPU-intensive tasks like processing a CSV file.
+Separates the main thread from the worker to avoid blocking the event loop.
 
 ```javascript showLineNumbers
 // utils/worker.js
@@ -280,6 +316,9 @@ if (isMainThread) {
 ## Testing
 
 ### 1. Unit Testing
+
+Tests individual services or functions using tools like chai and sinon.
+Example: Ensures UserService.createUser creates a user and sends a welcome email.
 
 ```javascript showLineNumbers
 // tests/user.service.test.js
@@ -321,6 +360,9 @@ describe('UserService', () => {
 
 ### 2. Integration Testing
 
+Uses supertest for testing API endpoints.
+Example: Tests the POST /api/users endpoint to ensure it creates a user successfully.
+
 ```javascript showLineNumbers
 // tests/api.test.js
 const request = require('supertest');
@@ -348,6 +390,9 @@ describe('API Integration Tests', () => {
 
 ### 1. Environment Configuration
 
+Loads environment variables using dotenv.
+Supports different environments (e.g., development, production) by switching .env files based on NODE_ENV.
+
 ```javascript showLineNumbers
 // config/config.js
 const dotenv = require('dotenv');
@@ -373,6 +418,11 @@ module.exports = {
 ```
 
 ### 2. Logging
+
+Uses winston for application logging.
+Configures file-based and console logging for different environments.
+Stores logs like error.log for errors and combined.log for all logs.
+
 
 ```javascript showLineNumbers
 // utils/logger.js

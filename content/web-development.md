@@ -36,6 +36,10 @@ To begin your web development journey, you'll need to set up your development en
 
 The frontend is what users see and interact with. Let's start with the core technologies:
 
+`<!DOCTYPE html>`: Declares the document type as HTML5.
+`<html>`: The root element of the HTML document.
+`<head>`: Contains metadata like the character set and title of the page.
+`<body>`: Contains the content visible to users, structured using `<header>`, `<main>`, and other semantic tags.
 
 ```html showLineNumbers
 <!DOCTYPE html>
@@ -58,6 +62,10 @@ The frontend is what users see and interact with. Let's start with the core tech
 
 ### CSS (Styling)
 
+**Flexbox**: Simplifies alignment and spacing of elements.  
+**container**: Centers its child elements both vertically and horizontally within the viewport.  
+**card**: A styled box with padding, rounded corners, and a shadow for depth.  
+
 ```css showLineNumbers
 /* Modern CSS with Flexbox */
 .container {
@@ -77,6 +85,12 @@ The frontend is what users see and interact with. Let's start with the core tech
 ```
 
 ### JavaScript (Interactivity)
+
+This example adds interactivity using modern ES6+ features:
+
+**Event Listener**: Adds a click handler to the button.  
+**Form Handling**: Collects data using FormData.  
+**Fetch API**: Sends the data to the server asynchronously and handles responses.  
 
 ```javascript showLineNumbers
 // Modern JavaScript with ES6+
@@ -105,6 +119,9 @@ Once you're comfortable with the basics, explore these intermediate concepts:
 
 ### Responsive Design
 
+**Mobile-first**: Starts with the smallest screen size and adds styles for larger screens using media queries.  
+**Breakpoints**: Adjust container width for tablets (768px) and desktops (1024px).  
+
 ```css showLineNumbers
 /* Mobile-first approach */
 .container {
@@ -130,6 +147,24 @@ Once you're comfortable with the basics, explore these intermediate concepts:
 
 ### Modern JavaScript Features
 
+**Async/Await**:
+
+The async keyword is used to define an asynchronous function, which makes handling asynchronous operations, like fetching data, more readable and manageable.  
+
+The await keyword pauses the execution of the function until the promise resolves (in this case, the API response). It eliminates the need for .then() chaining.  
+
+**Destructuring**:
+The response JSON is destructured into name, email, and role, which are specific properties of the returned user object. This makes the code concise and avoids multiple lines of variable assignments.  
+
+**Error Handling**:  
+The try-catch block ensures that any errors during the fetch operation (e.g., network issues or invalid user ID) are gracefully caught and logged.  
+
+**Code Walkthrough**:  
+**Input**: The function accepts an object with a userId property as input.  
+Fetch Call**: It makes an API call to /api/users/{userId} to fetch user details.  
+**Response Handling**: Once the promise resolves, the JSON response is destructured into specific user details (name, email, role) and returned as an object.  
+**Error Logging**: Any errors during the fetch or JSON processing are caught in the catch block and logged to the console.  
+
 ```javascript showLineNumbers 
 // Async/Await with destructuring
 const fetchUserData = async ({ userId }) => {
@@ -149,6 +184,11 @@ const fetchUserData = async ({ userId }) => {
 For those ready to dive deeper, here are advanced topics:
 
 ### React Components
+
+React simplifies building reusable UI components:
+
+**State and Effects**: useState manages data and loading state; useEffect fetches user data.  
+**Conditional Rendering**: Displays a loading message until data is fetched.  
 
 ```jsx showLineNumbers
 import React, { useState, useEffect } from 'react';
@@ -188,6 +228,11 @@ export default UserDashboard;
 
 ### API Integration
 
+The API service demonstrates how to encapsulate API calls:
+
+**Encapsulation**: Groups API methods in a class.  
+**Error Handling**: Provides centralized error management.  
+
 ```javascript showLineNumbers 
 // Modern API service with axios
 import axios from 'axios';
@@ -224,6 +269,11 @@ class ApiService {
 
 ### Performance Optimization
 
+Code splitting with React improves performance:
+
+**Lazy Loading**: Loads components only when needed, reducing initial load time.  
+**Suspense**: Displays fallback UI while loading.  
+
 ```javascript showLineNumbers
 // Code splitting example with React
 import React, { Suspense, lazy } from 'react';
@@ -240,6 +290,11 @@ function App() {
 ```
 
 ### Security Considerations
+
+Prevents common web vulnerabilities:
+
+**Sanitization**: Escapes special characters to prevent XSS attacks.  
+**CSRF Protection**: Ensures requests come from trusted sources using tokens.  
 
 ```javascript showLineNumbers
 // XSS Prevention

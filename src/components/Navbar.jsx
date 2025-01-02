@@ -80,7 +80,7 @@ const Navbar = () => {
               </SheetTrigger>
               <SheetContent>
                 <SheetHeader>
-                  {/* <SheetTitle className='text-left'>IrbazBlog</SheetTitle> */}
+                  <SheetTitle className='text-left'></SheetTitle>
                   <SheetDescription>
                     <div className="flex items-center gap-6 flex-col mt-8">
                       {/* <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3"> */}

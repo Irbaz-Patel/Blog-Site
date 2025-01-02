@@ -454,12 +454,12 @@ export default function Home() {
               </h3>
               <ul className="mt-4 space-y-4">
                 <li>
-                  <a
+                  <Link
                     className="text-base text-gray-500 hover:text-gray-900 dark:hover:text-white"
-                    href="/category/technology"
+                    href="/blogpost/web-development"
                   >
-                    Technology
-                  </a>
+                    Web Development
+                  </Link>
                 </li>
                 <li>
                   <Link

@@ -16,11 +16,17 @@ Explore the latest features and best practices for building modern web applicati
 
 ### 1. Project Setup
 
+To create a new Next.js 14 project with TypeScript and Tailwind CSS:
+
 ```bash
 npx create-next-app@latest my-app --typescript --tailwind --app
 ```
 
+This command initializes a new Next.js application with TypeScript and Tailwind CSS configured.
+
 ### 2. App Router Structure
+
+Next.js 14 introduces an improved app router structure for organizing your components and pages.
 
 ```typescript showLineNumbers
 // app/layout.tsx
@@ -45,10 +51,13 @@ export default function Home() {
   );
 }
 ```
+Here, `layout.tsx` defines the structure for your entire application, and `page.tsx` serves as the default homepage.
 
 ## Server Components
 
 ### 1. Async Components
+
+Server components allow fetching data directly on the server. Here's an example:
 
 ```typescript showLineNumbers
 // app/posts/page.tsx
@@ -72,8 +81,11 @@ export default async function Posts() {
   );
 }
 ```
+This code fetches posts on the server and displays them as a list of articles.
 
 ### 2. Server Actions
+
+Server actions simplify handling server-side logic:
 
 ```typescript showLineNumbers
 // app/actions.ts
@@ -102,10 +114,13 @@ export default function NewPost() {
   );
 }
 ```
+In this example, the form submits data to the server using the `createPost` server action.
 
 ## Data Fetching
 
 ### 1. Static Data Fetching
+
+For static site generation, you can define dynamic routes:
 
 ```typescript showLineNumbers
 // app/posts/[slug]/page.tsx
@@ -128,8 +143,11 @@ export default async function Post({ params }: { params: { slug: string } }) {
   );
 }
 ```
+This example pre-generates pages for each post based on their slug.
 
 ### 2. Dynamic Data Fetching
+
+To fetch data dynamically based on query parameters:
 
 ```typescript showLineNumbers
 // app/products/page.tsx
@@ -149,10 +167,13 @@ export default async function Products({
   );
 }
 ```
+Dynamic fetching enables real-time updates based on search parameters.
 
 ## Routing and Navigation
 
 ### 1. Dynamic Routes
+
+Dynamic routing enables parameterized URLs:
 
 ```typescript showLineNumbers
 // app/blog/[category]/[slug]/page.tsx
@@ -169,8 +190,11 @@ export default function BlogPost({
   );
 }
 ```
+This example generates a blog post page based on category and slug.
 
 ### 2. Route Handlers
+
+Route handlers allow creating APIs directly in Next.js:
 
 ```typescript showLineNumbers
 // app/api/posts/route.ts
@@ -187,10 +211,13 @@ export async function POST(request: Request) {
   return NextResponse.json(post, { status: 201 });
 }
 ```
+This code handles GET and POST requests for posts.
 
 ## Optimization
 
 ### 1. Image Optimization
+
+Next.js optimizes images out of the box:
 
 ```typescript showLineNumbers
 import Image from 'next/image';
@@ -209,8 +236,11 @@ export default function Gallery() {
   );
 }
 ```
+Images are automatically optimized for performance.
 
 ### 2. Metadata
+
+Next.js makes it easy to define metadata for pages:
 
 ```typescript showLineNumbers
 // app/layout.tsx
@@ -229,10 +259,13 @@ export const metadata: Metadata = {
   },
 };
 ```
+This metadata improves SEO and social sharing.
 
 ## State Management
 
 ### 1. React Context
+
+Manage application state using React Context:
 
 ```typescript showLineNumbers
 // app/providers.tsx
@@ -259,8 +292,11 @@ export function ThemeProvider({ children }: { children: React.ReactNode }) {
   );
 }
 ```
+This example toggles between light and dark themes.
 
 ### 2. Server State
+
+Optimistic updates using server state:
 
 ```typescript showLineNumbers
 // app/posts/useOptimisticPosts.ts
@@ -277,10 +313,13 @@ export function useOptimisticPosts(posts) {
   return { optimisticPosts, addOptimisticPost };
 }
 ```
+This allows for instant UI updates while waiting for the server response.
 
 ## Testing
 
 ### 1. Unit Testing
+
+Write unit tests for components:
 
 ```typescript showLineNumbers
 // __tests__/home.test.tsx
@@ -294,8 +333,11 @@ describe('Home', () => {
   });
 });
 ```
+This test checks if the welcome message is rendered.
 
 ### 2. Integration Testing
+
+Test API integration:
 
 ```typescript showLineNumbers
 // __tests__/api.test.ts
@@ -316,10 +358,13 @@ describe('Posts API', () => {
   });
 });
 ```
+This test verifies the API response.
 
 ## Deployment
 
 ### 1. Environment Variables
+
+Manage sensitive data using environment variables:
 
 ```typescript showLineNumbers
 // .env.local
@@ -332,8 +377,11 @@ export const config = {
   apiUrl: process.env.NEXT_PUBLIC_API_URL,
 };
 ```
+Environment variables ensure secure and dynamic configuration.
 
 ### 2. Build Configuration
+
+Customize Next.js build settings:
 
 ```typescript showLineNumbers
 // next.config.js
@@ -349,10 +397,12 @@ const nextConfig = {
 
 module.exports = nextConfig;
 ```
+This configuration enables experimental features and image optimization.
 
 ## Conclusion
 
 Next.js 14 brings powerful features for building modern web applications:
+
 1. Server Components
 2. Server Actions
 3. Improved routing

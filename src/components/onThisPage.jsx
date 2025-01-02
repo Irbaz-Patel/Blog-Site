@@ -46,7 +46,7 @@ const OnThisPage = ({ htmlcontent }) => {
       id="headings-dropdown"
       className="w-full p-2 border border-gray-300 rounded-lg dark:bg-gray-900"
       onChange={(e) => {
-        window.location.href = e.target.value;
+        window.location.hash  = e.target.value;
       }}
     >
       <option value="">On This Page</option>

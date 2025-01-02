@@ -25,13 +25,22 @@ export default function ModeToggle() {
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end">
-        <DropdownMenuItem onClick={() => setTheme("light")}>
+        <DropdownMenuItem  onClick={(event) => {
+            event.preventDefault(); // Prevent scrolling
+            setTheme("light");
+          }}>
           Light
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("dark")}>
+        <DropdownMenuItem  onClick={(event) => {
+            event.preventDefault(); // Prevent scrolling
+            setTheme("dark");
+          }}>
           Dark
         </DropdownMenuItem>
-        <DropdownMenuItem onClick={() => setTheme("system")}>
+        <DropdownMenuItem  onClick={(event) => {
+            event.preventDefault(); // Prevent scrolling
+            setTheme("system");
+          }}>
           System
         </DropdownMenuItem>
       </DropdownMenuContent>

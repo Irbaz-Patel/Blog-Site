@@ -16,11 +16,12 @@ React 19 introduces powerful new features and improvements for building modern w
 
 ### 1. Actions
 
-Actions provide a new way to handle data mutations and state updates with built-in support for:
-- Pending states
-- Error handling
-- Optimistic updates
-- Form submissions
+Actions in React 19 simplify handling data mutations and managing UI states like pending actions or errors. With the useActionState hook, you can manage actions like form submissions, track loading states, and handle errors in a structured way.
+
+Example Breakdown:
+- submitAction: A function triggered on form submission to perform an async operation.
+- isPending: A boolean indicating whether the action is still in progress.
+- error: Captures any errors that occur during the operation.
 
 ```typescript showLineNumbers
 // Using Actions with useActionState
@@ -50,6 +51,14 @@ function UpdateProfile() {
 ### 2. New Hooks
 
 #### useActionState
+
+This hook enables managing the state of actions, such as async updates. It keeps track of errors and pending states, making it ideal for operations like form handling.
+
+Code Example Explanation:
+- Handles formData submission.
+- Waits for the updateData async function.
+- Updates state dynamically based on the result.
+
 ```typescript showLineNumbers
 const [error, submitAction, isPending] = useActionState(
   async (previousState, newData) => {
@@ -61,6 +70,13 @@ const [error, submitAction, isPending] = useActionState(
 ```
 
 #### useOptimistic
+
+This hook provides an elegant way to handle optimistic updates by predicting state changes even before the server responds.
+
+Code Example Explanation:
+- Updates the UI (like button counts) optimistically without waiting for server confirmation.
+- Ensures the server update (via onLike()) aligns with the optimistic state.
+
 ```typescript showLineNumbers
 function LikeButton({ count, onLike }) {
   const [optimisticCount, addOptimisticCount] = useOptimistic(
@@ -82,6 +98,9 @@ function LikeButton({ count, onLike }) {
 ```
 
 #### useFormStatus
+
+A hook to check the status of a form, particularly its pending state. This simplifies form button states (like disabling during submission).
+
 ```typescript showLineNumbers
 import { useFormStatus } from 'react-dom';
 
@@ -97,7 +116,11 @@ function SubmitButton() {
 
 ### 3. use API
 
-The new `use` API allows reading resources and context within render:
+React 19 introduces the use API for managing asynchronous operations within render functions. It simplifies resource loading when combined with Suspense.
+
+Code Example Explanation:
+- The Comments component waits for the commentsPromise to resolve.
+- Suspense handles loading states gracefully while data is fetched asynchronously.
 
 ```typescript showLineNumbers
 import { use } from 'react';
@@ -124,7 +147,11 @@ function Page({ commentsPromise }) {
 
 ### 4. Document Metadata Support
 
-React 19 adds native support for managing document metadata:
+Managing metadata like titles, descriptions, and canonical links is now native to React. This removes the need for third-party libraries like react-helmet.
+
+Code Example Explanation:
+- Dynamically updates the document title and meta tags within a component.
+- Improves SEO by embedding metadata directly into components.
 
 ```typescript showLineNumbers
 function BlogPost({ post }) {
@@ -142,7 +169,11 @@ function BlogPost({ post }) {
 
 ### 5. Stylesheet Management
 
-Enhanced support for stylesheet management with precedence control:
+React 19 enhances stylesheet management by introducing precedence. You can control which stylesheets take priority, ensuring predictable and conflict-free styling.
+
+Code Example Explanation:
+- precedence="default" ensures base styles load first.
+- precedence="high" overrides base styles selectively.
 
 ```typescript showLineNumbers
 function Component() {
@@ -161,6 +192,18 @@ function Component() {
 ## Server Components
 
 ### 1. Server Components Basics
+
+Server components allow rendering on the server, reducing the workload on the client side.
+
+Basics
+Server-rendered components can fetch and display data, while client components handle dynamic interactions.
+
+Server Actions
+Server actions streamline server-side logic, like database updates, directly within React components.
+
+Code Example Explanation:
+- The updateUser function updates the database with formData.
+- The <form> uses action={updateUser} to handle submissions seamlessly.
 
 ```typescript showLineNumbers
 // ServerComponent.tsx
@@ -202,6 +245,9 @@ function UserForm() {
 
 ### 1. ref as a prop
 
+Ref as a Prop
+React now allows you to pass ref directly as a prop, eliminating the need for forwardRef.
+
 ```typescript showLineNumbers
 function Input({ placeholder, ref }) {
   return <input placeholder={placeholder} ref={ref} />;
@@ -212,6 +258,8 @@ function Input({ placeholder, ref }) {
 ```
 
 ### 2. Context as Provider
+
+Context can now be rendered directly as a provider, simplifying its implementation.
 
 ```typescript showLineNumbers
 const ThemeContext = createContext('light');
@@ -226,6 +274,11 @@ function App({ children }) {
 ```
 
 ### 3. Resource Preloading
+
+React introduces new APIs (preinit, preload) for preloading resources like scripts, fonts, and styles. This ensures faster rendering and better performance.
+
+Code Example Explanation:
+- preinit and preload prefetch critical resources before rendering begins.
 
 ```typescript showLineNumbers
 import { prefetchDNS, preconnect, preload, preinit } from 'react-dom';
