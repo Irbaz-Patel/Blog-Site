@@ -104,50 +104,51 @@
 
 // export default Page;
 
-import fs from "fs";
-import path from "path";
-import matter from "gray-matter";
-import rehypeDocument from "rehype-document";
-import rehypeFormat from "rehype-format";
-import rehypeStringify from "rehype-stringify";
-import remarkParse from "remark-parse";
-import remarkRehype from "remark-rehype";
-import { unified } from "unified";
-import rehypePrettyCode from "rehype-pretty-code";
-import { transformerCopyButton } from "@rehype-pretty/transformers";
-import rehypeAutolinkHeadings from "rehype-autolink-headings";
-import rehypeSlug from "rehype-slug";
-import OnThisPage from "../../../components/onThisPage";
+import fs from 'fs';
+import path from 'path';
+import matter from 'gray-matter';
+import rehypeDocument from 'rehype-document';
+import rehypeFormat from 'rehype-format';
+import rehypeStringify from 'rehype-stringify';
+import remarkParse from 'remark-parse';
+import remarkRehype from 'remark-rehype';
+import { unified } from 'unified';
+import rehypePrettyCode from 'rehype-pretty-code';
+import { transformerCopyButton } from '@rehype-pretty/transformers';
+import rehypeAutolinkHeadings from 'rehype-autolink-headings';
+import rehypeSlug from 'rehype-slug';
+import OnThisPage from '../../../components/onThisPage';
 
-// Fetch all blog posts' slugs at build time
-export async function getStaticPaths() {
-  const files = fs.readdirSync(path.join(process.cwd(), "content"));
-  const paths = files.map(file => ({
-    params: { slug: file.replace(".md", "") }, // remove the .md extension
+// Generate the paths for static generation
+export async function generateStaticParams() {
+  const contentPath = path.join(process.cwd(), 'content');
+  const files = fs.readdirSync(contentPath);
+
+  const paths = files.map((file) => ({
+    slug: file.replace('.md', ''),
   }));
 
-  return {
-    paths,
-    fallback: false,
-  };
+  return paths.map((slug) => ({
+    slug: slug.slug,
+  }));
 }
 
-// Fetch blog post data based on the slug at build time
-export async function getStaticProps({ params }) {
+// Get the data for a particular blog post
+export async function generateMetadata({ params }) {
   const { slug } = params;
-  const filepath = path.join(process.cwd(), "content", `${slug}.md`);
+  const filepath = path.join(process.cwd(), 'content', `${slug}.md`);
 
   if (!fs.existsSync(filepath)) {
     return { notFound: true };
   }
 
-  const fileContent = fs.readFileSync(filepath, "utf-8");
+  const fileContent = fs.readFileSync(filepath, 'utf-8');
   const { content, data } = matter(fileContent);
 
   const file = await unified()
     .use(remarkParse)
     .use(remarkRehype)
-    .use(rehypeDocument, { title: "👋🌍" })
+    .use(rehypeDocument, { title: '👋🌍' })
     .use(rehypeFormat)
     .use(rehypeStringify)
     .use(rehypeAutolinkHeadings)
@@ -155,8 +156,8 @@ export async function getStaticProps({ params }) {
     .use(rehypePrettyCode, {
       transformers: [
         transformerCopyButton({
-          visibility: "always",
-          feedbackDuration: 3_000,
+          visibility: 'always',
+          feedbackDuration: 3000,
         }),
       ],
     });
